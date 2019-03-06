@@ -7,7 +7,7 @@ const app = express()
 app.get('/search',function(req,res){
 	const puppeteer = require('puppeteer');
   (async() => {
-    const browser = await puppeteer.launch({headless: true,args: ['--start-fullscreen','--no-sandbox']});
+    const browser = await puppeteer.launch({headless: true,args: ['--no-sandbox']});
     const page = await browser.newPage();
     await page.setViewport({width:1600,height:2071})
     const word = req.query.word;
