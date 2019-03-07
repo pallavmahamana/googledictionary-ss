@@ -14,7 +14,7 @@ app.get('/search',function(req,res){
     const word = req.query.word;
     await page.goto('https://www.google.com/search?q=meaning+of+'+word+'&ie=utf-8&oe=utf-8&client=firefox-b-ab', {waitUntil: 'networkidle2'});
     await page.click('.iXqz2e.aI3msd.xpdarr.pSO8Ic.vk_arc');
-    await page.waitFor(1000);
+    await page.waitFor(1500);
     let elems = await page.$$('.lr_dct_more_btn')
     for (let element of elems)
     	element.click();
@@ -37,6 +37,7 @@ app.get('/search',function(req,res){
 	})
 
     browser.close();
+
 })();
 
 })
