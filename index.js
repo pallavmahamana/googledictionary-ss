@@ -22,7 +22,12 @@ app.get('/search',function(req,res){
     let elems = await page.$$('.lr_dct_more_btn')
     for (let element of elems)
     	element.click();
-    await page.waitFor(1000);
+    await page.waitFor(500)
+    await page.evaluate(()=>{
+    	document.querySelector('.sfbg.nojsv').remove();
+    	document.querySelector('#tsf').remove();
+
+    });
 
     let elements = await page.$$('div.lr_dct_ent.vmod.XpoqFe');
     for (let i = 0; i < elements.length; i++) {
