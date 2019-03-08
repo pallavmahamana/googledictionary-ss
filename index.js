@@ -1,6 +1,7 @@
 const express = require('express')
 const path = require('path')
 const mergeImg = require('merge-img')
+const fs = require('fs')
 const PORT = process.env.PORT || 5000
 const app = express()
 
@@ -13,6 +14,8 @@ app.get('/search',function(req,res){
     await page.setViewport({width:1920,height:1080, devicescalefactor:2});
     const word = req.query.word;
     await page.goto('https://www.google.com/search?q=meaning+of+'+word+'&ie=utf-8&oe=utf-8&client=firefox-b-ab', {waitUntil: 'networkidle2'});
+    await page.type('input[class=dw-sbi]',word)
+    await page.click('.dw-sb-btn');
     await page.click('.iXqz2e.aI3msd.xpdarr.pSO8Ic.vk_arc');
     await page.waitFor(1500);
     let elems = await page.$$('.lr_dct_more_btn')
@@ -30,13 +33,20 @@ app.get('/search',function(req,res){
     console.log(`couldnt take screenshot of element with index: ${i}. cause: `,  e)
   }
 }
+    let imgFiles = Array.from(Array(elements.length).keys()).map(item=>item+'.png')
+	mergeImg(imgFiles,{'direction':true}).then((img)=> {
+		img.write('out.png',()=>{res.sendFile('out.png',{ root: __dirname});
 
-	mergeImg(Array.from(Array(elements.length).keys()).map(item=>item+'.png'),{'direction':true}).then((img)=> {
-		img.write('out.png',()=>{res.sendFile('out.png',{ root: __dirname})})
+	},
+	imgFiles.forEach( function(element, index) {
+    	fs.unlink(element);
+    }))
 
-	})
+	}
+	)
 
     browser.close();
+
 
 })();
 
