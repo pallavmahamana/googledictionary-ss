@@ -5,6 +5,7 @@ const fs = require('fs')
 const PORT = process.env.PORT || 5000
 const app = express()
 
+app.use(express.static('public'));
 
 app.get('/search',function(req,res){
 	const puppeteer = require('puppeteer');
@@ -47,7 +48,6 @@ app.get('/search',function(req,res){
 	)
 
     browser.close();
-
 
 })();
 
