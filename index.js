@@ -8,14 +8,14 @@ const app = express()
 app.use(express.static('public'));
 
 app.get('/createlist', function(req, res) {
-	const listname = req.query.name;
+    const listname = req.query.name;
 
 
 
 });
 
 
-app.get('/list',function(req,res){
+app.get('/list', function(req, res) {
 
 
 });
@@ -30,26 +30,38 @@ app.get('/api/search', function(req, res) {
         await page.setViewport({ width: 1920, height: 1080, devicescalefactor: 2 });
         const word = req.query.word;
         await page.goto('https://www.google.com/search?q=meaning+of+' + word + '&ie=utf-8&oe=utf-8&client=firefox-b-ab', { waitUntil: 'networkidle2' });
+
+        if ((await page.$$('input[class=dw-sbi]')).length == 0)
+            res.send('NOT FOUND')
+
         await page.type('input[class=dw-sbi]', word);
         await page.click('.dw-sb-btn');
         await page.click('.iXqz2e.aI3msd.xpdarr.pSO8Ic.vk_arc');
-        await page.waitFor(1500);
+        await page.waitFor(1000);
 
         let elems = await page.$$('.lr_dct_more_btn')
+        await page.waitFor(1000);
         for (let element of elems)
-            element.click();
-
-        await page.waitFor(500)
+        	element.click();
 
         await page.evaluate(() => {
             document.querySelector('.sfbg.nojsv').remove();
             document.querySelector('#tsf').remove();
 
         });
+
+
+
+
+
+
+
         let elements = await page.$$('div.lr_dct_ent.vmod.XpoqFe');
         for (let i = 0; i < elements.length; i++) {
             try {
+
                 // get screenshot of a particular element
+
                 await elements[i].screenshot({ path: `${i}.png` })
             } catch (e) {
                 // if element is 'not visible', spit out error and continue
@@ -75,4 +87,4 @@ app.get('/api/search', function(req, res) {
 
 })
 
-app.listen(PORT, () => console.log(`Listening on ${ PORT }`))
+app.listen(PORT, () => console.log(`Listening on${ PORT }`))
