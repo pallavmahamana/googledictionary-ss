@@ -44,7 +44,7 @@ app.get('/api/search', function(req, res) {
         let elems = await page.$$('.lr_dct_more_btn')
         await page.waitFor(1000);
         for (let element of elems)
-        	element.click();
+        	await element.click();
 
         await page.evaluate(() => {
             document.querySelector('.sfbg.nojsv').remove();
