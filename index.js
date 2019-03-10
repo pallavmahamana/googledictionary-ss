@@ -5,6 +5,7 @@ const pgp = require('pg-promise')
 const cloudinary = require('cloudinary').v2
 const fs = require('fs')
 const redis = require('redis')
+const http = require('http')
 
 
 const PORT = process.env.PORT || 5000
@@ -44,7 +45,10 @@ app.get('/api/search', function(req, res) {
         } else {
             console.log(result);
             if (result) {
-                res.redirect('https://res.cloudinary.com/' + process.env.CLOUDINARY_CLOUD_NAME + '/image/upload/' + req.query.word + '.png');
+            	var cldnryImgUrl = 'https://res.cloudinary.com/' + process.env.CLOUDINARY_CLOUD_NAME + '/image/upload/' + req.query.word + '.png';
+            	http.get(cldnryImgUrl,function(response){
+            		res.sendFile(response);
+            	});
             } else {
                 const puppeteer = require('puppeteer');
                 (async () => {
@@ -89,6 +93,7 @@ app.get('/api/search', function(req, res) {
 
                     mergeImg(imgFiles, { 'direction': true }).then((img) => {
                         img.write(word + '.png', () => {
+                        		res.set('Content-Type','image/png');
                                 res.sendFile(word + '.png', { root: __dirname });
                                 cloudinary.uploader.upload(
                                     word + '.png', { public_id: word },
