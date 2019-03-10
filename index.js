@@ -100,7 +100,6 @@ app.get('/api/search', function(req, res) {
                                             // add word to redis
                                             credis.sadd("words", word, function(err, res) {
                                                 console.log(err, res);
-                                                credis.end();
                                             })
 
                                         }
