@@ -89,7 +89,7 @@ app.get('/api/search', function(req, res) {
         await page.close();
         await browser.close();
         cloudinary.uploader.upload(
-        	word+'.png')
+        	word+'.png',function(error, result) {console.log(result, error);});
 
 
     })();
