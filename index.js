@@ -69,8 +69,8 @@ app.get('/api/search', function(req, res) {
         let imgFiles = Array.from(Array(elements.length).keys()).map(item => item + '.png');
 
         mergeImg(imgFiles, { 'direction': true }).then((img) => {
-            img.write('out.png', () => {
-                    res.sendFile('out.png', { root: __dirname });
+            img.write(word+'.png', () => {
+                    res.sendFile(word+'.png', { root: __dirname });
 
                 },
                 imgFiles.forEach(function(element, index) {
