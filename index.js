@@ -39,7 +39,7 @@ app.get('/list', function(req, res) {
 
 app.get('/api/search', function(req, res) {
 
-    credis.sismember("words", req.query.word, function(error, result) {
+    credis.sismember("words", req.query.word, function(error, result, res) {
         if (error) {
             console.log(error);
         } else {
