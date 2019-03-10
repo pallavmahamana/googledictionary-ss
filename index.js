@@ -80,7 +80,7 @@ app.get('/api/search', function(req, res) {
             img.write(word+'.png', () => {
                     res.sendFile(word+'.png', { root: __dirname });
                     cloudinary.uploader.upload(
-        	word+'.png',function(error, result) {console.log(result, error);});
+        	word+'.png',{ public_id:word+'.png' },function(error, result) {console.log(result, error);});
 
 
                 },
