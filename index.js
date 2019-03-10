@@ -4,10 +4,12 @@ const mergeImg = require('merge-img')
 const pgp = require('pg-promise')
 const cloudinary = require('cloudinary').v2
 const fs = require('fs')
+const redis = require('redis')
 
 
 const PORT = process.env.PORT || 5000
 const app = express()
+const credis = redis.createClient(process.env.REDIS_URL)
 
 
 cloudinary.config({
@@ -35,6 +37,15 @@ app.get('/list', function(req, res) {
 
 
 app.get('/api/search', function(req, res) {
+
+	credis.sismember("words",req.query.word,function(err,res){
+		if(err){
+			console.log(err);
+		}
+		else {
+		 	console.log(res);
+		}
+	})
     const puppeteer = require('puppeteer');
     (async () => {
         const browser = await puppeteer.launch({ headless: true, args: ['--no-sandbox', '--disable-setuid-sandbox', '--start-fullscreen'] });
@@ -80,7 +91,20 @@ app.get('/api/search', function(req, res) {
             img.write(word+'.png', () => {
                     res.sendFile(word+'.png', { root: __dirname });
                     cloudinary.uploader.upload(
-        	word+'.png',{ public_id:word+'.png' },function(error, result) {console.log(result, error);});
+        	word+'.png',{ public_id:word },function(error, result) {
+        		if(error){
+        			console.log(error);
+        		}
+        		else{
+        			console.log(result.url);
+        			// add word to redis
+        			credis.sadd("words",word,function(err,res){
+        				console.log(err,res);
+        				credis.end();
+        			})
+
+        		}
+        	});
 
 
                 },
