@@ -47,9 +47,9 @@ app.get('/api/search', function(req, res) {
             if (result) {
             	var cldnryImgUrl = 'https://res.cloudinary.com/' + process.env.CLOUDINARY_CLOUD_NAME + '/image/upload/' + req.query.word + '.png';
             	var file = fs.createWriteStream(res.query.word+'.png');
-            	https.get(cldnryImgUrl,function(response){
+            	https.get(cldnryImgUrl,function(response, res){
             		response.pipe(file);
-            		file.on('finish',function(){
+            		file.on('finish',function(res){
             			res.set('Content-Type','image/png');
             			res.sendFile(res.query.word+'.png',{ root: __dirname });
             		})
