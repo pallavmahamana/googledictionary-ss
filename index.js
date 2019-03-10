@@ -47,7 +47,8 @@ app.get('/api/search', function(req, res) {
             if (result) {
             	var cldnryImgUrl = 'https://res.cloudinary.com/' + process.env.CLOUDINARY_CLOUD_NAME + '/image/upload/' + req.query.word + '.png';
             	https.get(cldnryImgUrl,function(response){
-            		res.sendFile(response);
+            		res.set('Content-Type','image/png');
+            		res.end(response,'binary');
             	});
             } else {
                 const puppeteer = require('puppeteer');
