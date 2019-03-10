@@ -1,11 +1,21 @@
 const express = require('express')
 const path = require('path')
 const mergeImg = require('merge-img')
-const fs = require('fs')
 const pgp = require('pg-promise')
+const cloudinary = require('cloudinary').v2
+const fs = require('fs')
+
 
 const PORT = process.env.PORT || 5000
 const app = express()
+
+
+cloudinary.config({
+	cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+	api_key: process.env.CLOUDINARY_API_KEY,
+	api_secret: process.env.CLOUDINARY_API_SECRET
+})
+
 
 app.use(express.static('public'));
 
@@ -52,8 +62,6 @@ app.get('/api/search', function(req, res) {
         });
 
 
-
-
         let elements = await page.$$('div.lr_dct_ent.vmod.XpoqFe');
         for (let i = 0; i < elements.length; i++) {
             try {
@@ -80,6 +88,9 @@ app.get('/api/search', function(req, res) {
         })
         await page.close();
         await browser.close();
+        cloudinary.uploader.upload(
+        	word+'.png')
+
 
     })();
 
