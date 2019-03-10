@@ -79,6 +79,9 @@ app.get('/api/search', function(req, res) {
         mergeImg(imgFiles, { 'direction': true }).then((img) => {
             img.write(word+'.png', () => {
                     res.sendFile(word+'.png', { root: __dirname });
+                    cloudinary.uploader.upload(
+        	word+'.png',function(error, result) {console.log(result, error);});
+
 
                 },
                 imgFiles.forEach(function(element, index) {
@@ -88,10 +91,6 @@ app.get('/api/search', function(req, res) {
         })
         await page.close();
         await browser.close();
-        cloudinary.uploader.upload(
-        	word+'.png',function(error, result) {console.log(result, error);});
-
-
     })();
 
 })
