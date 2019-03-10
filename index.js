@@ -5,7 +5,7 @@ const pgp = require('pg-promise')
 const cloudinary = require('cloudinary').v2
 const fs = require('fs')
 const redis = require('redis')
-const http = require('http')
+const https = require('https')
 
 
 const PORT = process.env.PORT || 5000
@@ -46,7 +46,7 @@ app.get('/api/search', function(req, res) {
             console.log(result);
             if (result) {
             	var cldnryImgUrl = 'https://res.cloudinary.com/' + process.env.CLOUDINARY_CLOUD_NAME + '/image/upload/' + req.query.word + '.png';
-            	http.get(cldnryImgUrl,function(response){
+            	https.get(cldnryImgUrl,function(response){
             		res.sendFile(response);
             	});
             } else {
