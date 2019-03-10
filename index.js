@@ -38,12 +38,14 @@ app.get('/list', function(req, res) {
 
 app.get('/api/search', function(req, res) {
 
-	credis.sismember("words",req.query.word,function(err,res){
-		if(err){
-			console.log(err);
+	credis.sismember("words",req.query.word,function(errpr,result){
+		if(error){
+			console.log(error);
 		}
 		else {
-		 	console.log(res);
+		 	console.log(result);
+		 	res.redirect('https://res.cloudinary.com/'+process.env.CLOUDINARY_CLOUD_NAME+'/image/upload/'+req.query.word+'.png');
+
 		}
 	})
     const puppeteer = require('puppeteer');
@@ -109,8 +111,8 @@ app.get('/api/search', function(req, res) {
 
                 },
                 imgFiles.forEach(function(element, index) {
-                    fs.unlink(element, (err) => { console.log(err) });
-                }, (err) => { console.log(err) }))
+                    fs.unlink(element, (err) => { if(err){console.log(err);} });
+                }, (err) => {if(err){console.log(err);} }))
 
         })
         await page.close();
