@@ -2,6 +2,8 @@ const express = require('express')
 const path = require('path')
 const mergeImg = require('merge-img')
 const fs = require('fs')
+const pgp = require('pg-promise')
+
 const PORT = process.env.PORT || 5000
 const app = express()
 
@@ -80,8 +82,8 @@ app.get('/api/search', function(req, res) {
                 }, (err) => { console.log(err) }))
 
         })
-
-        browser.close();
+        await page.close();
+        await browser.close();
 
     })();
 
