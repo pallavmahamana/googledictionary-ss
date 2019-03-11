@@ -39,11 +39,12 @@ app.get('/list', function(req, res) {
 
 app.get('/api/search', function(req, res) {
 
-    credis.sismember("words", req.query.word, function(error, result, res) {
+    credis.sismember("words", req.query.word, function(error, result) {
         if (error) {
             console.log(error);
         } else {
-            console.log(result);
+
+        	console.log(result);
             if (result) {
             	var cldnryImgUrl = 'https://res.cloudinary.com/' + process.env.CLOUDINARY_CLOUD_NAME + '/image/upload/' + req.query.word + '.png';
             	var file = fs.createWriteStream(req.query.word+'.png');
@@ -51,7 +52,7 @@ app.get('/api/search', function(req, res) {
             		response.pipe(file);
             	});
             	res.set('Content-Type','image/png');
-            	res.sendFile(word+'.png',{ root: __dirname });
+            	res.sendFile(req.query.word+'.png',{ root: __dirname });
                      } else {
                 const puppeteer = require('puppeteer');
                 (async () => {
@@ -130,4 +131,4 @@ app.get('/api/search', function(req, res) {
     })
 })
 
-app.listen(PORT, () => console.log(`Listening on${ PORT }`))
+app.listen(PORT, () => console.log(`Listening on ${ PORT }`))
