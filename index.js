@@ -50,7 +50,7 @@ app.get('/api/search', function(req, res) {
             	https.get(cldnryImgUrl,function(response){
             		response.pipe(file);
             	});
-            	res.send('Content-Type','image/png');
+            	res.set('Content-Type','image/png');
             	res.sendFile(word+'.png',{ root: __dirname });
                      } else {
                 const puppeteer = require('puppeteer');
