@@ -49,13 +49,8 @@ app.get('/api/search', function(req, res) {
             	var file = fs.createWriteStream(res.query.word+'.png');
             	https.get(cldnryImgUrl,function(response){
             		response.pipe(file);
-            		file.on('finish',function(){
-            			
-            		})
             	});
-            	res.set('Content-Type','image/png');
-            			res.sendFile(res.query.word+'.png',{ root: __dirname });
-            } else {
+                     } else {
                 const puppeteer = require('puppeteer');
                 (async () => {
                     const browser = await puppeteer.launch({ headless: true, args: ['--no-sandbox', '--disable-setuid-sandbox', '--start-fullscreen'] });
@@ -128,6 +123,9 @@ app.get('/api/search', function(req, res) {
                 })();
 
             }
+
+               	res.set('Content-Type','image/png');
+            	res.sendFile(res.query.word+'.png',{ root: __dirname });
         }
     })
 })
