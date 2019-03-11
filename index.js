@@ -22,20 +22,16 @@ cloudinary.config({
 
 app.use(express.static('public'));
 
+
 app.get('/createlist', function(req, res) {
-    const listname = req.query.name;
-
-
-
-});
-
-
-app.get('/list', function(req, res) {
 
 
 });
 
+app.get('/',function(req, res){
 
+
+});
 
 app.get('/api/search', function(req, res) {
 
