@@ -44,15 +44,17 @@ app.get('/api/search', function(req, res) {
             console.log(error);
         } else {
 
-        	console.log(result);
             if (result) {
             	var cldnryImgUrl = 'https://res.cloudinary.com/' + process.env.CLOUDINARY_CLOUD_NAME + '/image/upload/' + req.query.word + '.png';
             	var file = fs.createWriteStream(req.query.word+'.png');
             	https.get(cldnryImgUrl,function(response){
-            		response.pipe(file);
+            		let stream = response.pipe(file);
+            		stream.on('finish',()=>{
+            		res.set('Content-Type','image/png');
+            		res.sendFile(req.query.word+'.png',{ root: __dirname });
+            		});
             	});
-            	res.set('Content-Type','image/png');
-            	res.sendFile(req.query.word+'.png',{ root: __dirname });
+
                      } else {
                 const puppeteer = require('puppeteer');
                 (async () => {
