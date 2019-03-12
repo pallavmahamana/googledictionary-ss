@@ -23,12 +23,14 @@ cloudinary.config({
 app.use(express.static('public'));
 
 
-app.get('/createlist', function(req, res) {
+app.get('/api/list/:id', function(req, res) {
+
 
 
 });
 
 app.get('/',function(req, res){
+
 
 
 });
@@ -61,7 +63,7 @@ app.get('/api/search', function(req, res) {
                     await page.goto('https://www.google.com/search?q=meaning+of+' + word + '&ie=utf-8&oe=utf-8&client=firefox-b-ab', { waitUntil: 'networkidle2' });
 
                     if ((await page.$$('input[class=dw-sbi]')).length == 0)
-                        res.send('NOT FOUND')
+                        res.json({'404':'NOT FOUND'})
 
                     await page.type('input[class=dw-sbi]', word);
                     await page.click('.dw-sb-btn');
