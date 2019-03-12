@@ -1,3 +1,4 @@
+*.rdb
 .env
 *.png
 node_modules/
