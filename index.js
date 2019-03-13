@@ -81,7 +81,7 @@ app.get('/api/search', function(req, res) {
 
                     });
 
-
+                    await page.waitFor(500);
                     let elements = await page.$$('div.lr_dct_ent.vmod.XpoqFe');
                     for (let i = 0; i < elements.length; i++) {
                         try {
