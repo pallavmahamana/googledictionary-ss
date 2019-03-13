@@ -23,7 +23,8 @@ cloudinary.config({
 app.use(express.static('public'));
 
 
-app.get('/api/list/:id', function(req, res) {
+app.post('/api/lists', function(req, res) {
+	
 
 
 
@@ -58,7 +59,7 @@ app.get('/api/search', function(req, res) {
                 (async () => {
                     const browser = await puppeteer.launch({ headless: true, args: ['--no-sandbox', '--disable-setuid-sandbox', '--start-fullscreen'] });
                     const page = await browser.newPage();
-                    await page.setViewport({ width: 1920, height: 1080, devicescalefactor: 2 });
+                    await page.setViewport({ width: 1920, height: 1080 });
                     const word = req.query.word;
                     await page.goto('https://www.google.com/search?q=meaning+of+' + word + '&ie=utf-8&oe=utf-8&client=firefox-b-ab', { waitUntil: 'networkidle2' });
 
