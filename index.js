@@ -23,6 +23,10 @@ cloudinary.config({
 app.use(express.static('public'));
 
 
+app.get('/',function(req, res){
+	res.sendFile('index.html')
+});
+
 app.post('/api/lists', function(req, res) {
 	
 
@@ -37,7 +41,14 @@ app.get('/',function(req, res){
 });
 
 app.get('/api/search', function(req, res) {
+	if(req.query.refresh=='1')
+	{	
+		credis.srem("words",req.query.word,function(error,result){
+		 	if(error){console.log(error);}
+		 	else{console.log("deleted from redis set");}
+		});
 
+	}
     credis.sismember("words", req.query.word, function(error, result) {
         if (error) {
             console.log(error);
@@ -101,7 +112,7 @@ app.get('/api/search', function(req, res) {
                         		res.set('Content-Type','image/png');
                                 res.sendFile(word + '.png', { root: __dirname });
                                 cloudinary.uploader.upload(
-                                    word + '.png', { public_id: word },
+                                    word + '.png', { public_id: word, overwrite:true },
                                     function(error, result) {
                                         if (error) {
                                             console.log(error);
