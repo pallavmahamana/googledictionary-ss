@@ -27,14 +27,16 @@ app.get('/',function(req, res){
 	res.sendFile('index.html')
 });
 
-app.post('/api/lists', function(req, res) {
-	
-
+app.get('/api/list', function(req, res) {
+	// takes query create parameter to create list
+	// /api/list?create=listname
 
 
 });
 
-app.get('/',function(req, res){
+app.get('/api/list/:id',function(req, res){
+	// list all the words in list with name id
+
 
 
 
