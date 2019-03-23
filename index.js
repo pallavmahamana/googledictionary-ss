@@ -28,7 +28,8 @@ app.get('/api/list',function(req, res){
 		if(err)
 			console.log(err);
 		else {
-			res.send(result);
+			res.setHeader('Content-Type', 'application/json');
+			res.end(result);
 		}
 	})
 });
