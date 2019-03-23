@@ -29,7 +29,7 @@ app.get('/api/list',function(req, res){
 			console.log(err);
 		else {
 			res.setHeader('Content-Type', 'application/json');
-			res.end(result);
+			res.send(result);
 		}
 	})
 });
