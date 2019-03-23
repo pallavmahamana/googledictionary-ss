@@ -23,16 +23,17 @@ cloudinary.config({
 app.use(express.static('public'));
 
 
-app.get('/',function(req, res){
-	res.sendFile('index.html')
+app.get('/api/list',function(req, res){
+	credis.smembers("words",function(err,result){
+		if(err)
+			console.log(err);
+		else {
+			res.send(result);
+		}
+	})
 });
 
-app.get('/api/list', function(req, res) {
-	// takes query create parameter to create list
-	// /api/list?create=listname
 
-
-});
 
 app.get('/api/list/:id',function(req, res){
 	// list all the words in list with name id
