@@ -82,7 +82,12 @@ app.get('/api/search', function(req, res) {
                         res.json({'404':'NOT FOUND'})
 
                     await page.type('input[class=dw-sbi]', word);
+
+
                     await page.click('.dw-sb-btn');
+
+
+
                     await page.click('.iXqz2e.aI3msd.xpdarr.pSO8Ic.vk_arc');
 
                     let elems = await page.$$('.lr_dct_more_btn')
