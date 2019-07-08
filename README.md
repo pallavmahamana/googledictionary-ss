@@ -1,6 +1,11 @@
 # googledictionary-ss
-A nifty node app for getting google dictionary DOM element screenshot
+A nifty node app for getting google dictionary DOM element screenshot. It uses Puppeteer as headless browser to take screenshot of DOM element of google dictionary and then upload it to cloudinary, maintaining a Redis instance for all the already looked up words in memory. 
 
+
+# Working
+(Client) --> Redis --> Cloudinary Bucket Storage -- > googledictionary-ss ( Heroku instance )
+
+Redis sitting in between makes thing faster as words which are looked up in past are already available in cloudinary storage.
 
 
 GET
