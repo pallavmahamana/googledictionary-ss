@@ -9,8 +9,8 @@ A nifty node app for getting google dictionary DOM element screenshot. It uses P
 
 Redis sitting in between makes thing faster as words which are looked up in past are already available in cloudinary storage.
 
-
-GET
+__Method__:
+**GET**
 
 /api/search?word=<Search_Word>
 
