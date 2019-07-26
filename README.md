@@ -3,7 +3,9 @@ A nifty node app for getting google dictionary DOM element screenshot. It uses P
 
 
 # Working
-(Client) --> Redis --> Cloudinary Bucket Storage -- > googledictionary-ss ( Heroku instance )
+
+![Arch](https://raw.githubusercontent.com/pallavmahamana/googledictionary-ss/master/google%20ss.png)
+
 
 Redis sitting in between makes thing faster as words which are looked up in past are already available in cloudinary storage.
 
