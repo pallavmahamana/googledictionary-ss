@@ -15,7 +15,7 @@ __Method__:
 /api/search?word=<Search_Word>
 
 
-I Hosted this app on heroku at
+I have hosted this app on heroku at
 https://googledictionary.herokuapp.com/api/search?word=<Search_Word>
 
 List of words in search history can be accessed at
